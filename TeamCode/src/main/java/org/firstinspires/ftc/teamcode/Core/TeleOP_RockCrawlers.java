@@ -171,7 +171,7 @@ public class TeleOP_RockCrawlers extends OpMode {
         //TODO make teleop under here
         //note: dont use sleep here only in auto
 
-        launcherStuff();
+        launcherStuff(); //TODO add input for speed (RPM) later
 
 
 
