@@ -43,8 +43,6 @@ public class TeleOP_RockCrawlers extends OpMode {
 
     private boolean automatedDrive;
 
-    Follower teleFollower;
-
     //Trackpad data
     public double trackpadXMax = 1920;
     public double trackpadXMin = 0;
@@ -78,8 +76,6 @@ public class TeleOP_RockCrawlers extends OpMode {
 
         // Call the initialization protocol from the Robot class.
         robot = new Robot(hardwareMap, telemetry, this);
-        teleFollower = Constants.createFollower(hardwareMap);
-        robot.targetScanner.InitLimeLightTargeting(1, robot);
         robot.controlMode = STANDARD_ROBOT_CENTRIC;
         imu = hardwareMap.get(IMU.class, "imu");
 
@@ -95,9 +91,6 @@ public class TeleOP_RockCrawlers extends OpMode {
                 startingPose.getHeading()
         );
 
-        teleFollower.setPose(startingPose);
-        teleFollower.setHeading(startingPose.getHeading()); // TODO Redundant?
-
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
     }
@@ -105,7 +98,7 @@ public class TeleOP_RockCrawlers extends OpMode {
     private Pose grabStartPose() {
         Object pedroXFromBB = blackboard.getOrDefault("PedroX", 72.0);
         Object pedroYFromBB = blackboard.getOrDefault("PedroY", 72.0);
-        Object pedroHeadingFromBB =  blackboard.getOrDefault("PedroHeading", Math.PI / 2);
+        Object pedroHeadingFromBB = blackboard.getOrDefault("PedroHeading", Math.PI / 2);
 
         double goodX = 72;
         double goodY = 72;
@@ -174,12 +167,9 @@ public class TeleOP_RockCrawlers extends OpMode {
         launcherStuff(); //TODO add input for speed (RPM) later
 
 
-
-
         if (robot.controlMode == STANDARD_ROBOT_CENTRIC) {
             singleJoystickDrive();
-        }
-        else if (robot.controlMode == PEDRO) {
+        } else if (robot.controlMode == PEDRO) {
 
         }
         runTrackpadFunctions();
@@ -206,7 +196,7 @@ public class TeleOP_RockCrawlers extends OpMode {
         blackboard.put("PedroX", robot.robotPosition.getX());
         blackboard.put("PedroY", robot.robotPosition.getY());
         blackboard.put("PedroHeading", Math.toRadians(robot.robotPosition.getHeading()));
-        if (killSwitchActivated){
+        if (killSwitchActivated) {
             telemetry.addLine("Killswitch Hit!");
         }
     }
@@ -218,6 +208,7 @@ public class TeleOP_RockCrawlers extends OpMode {
 
     /**
      * Actually moves the drive train, using values calculated by singleJoystickDrive().
+     *
      * @param motorPowers An array containing the powers for the following motors, in order:
      *                    frontLeftDrive, frontRightDrive, backLeftDrive, and backRightDrive
      */
@@ -290,26 +281,8 @@ public class TeleOP_RockCrawlers extends OpMode {
         if (gamepad2.start && gamepad2.shareWasPressed()) {
             if (robot.alliance == BLUE) {
                 robot.alliance = RED;
-                robot.targetScanner.InitLimeLightTargeting(1, robot);
             } else {
                 robot.alliance = BLUE;
-                robot.targetScanner.InitLimeLightTargeting(2, robot);
-            }
-        }
-    }
-
-    /**
-     * Resets the robot location to a predetermined reset point.
-     */
-    private void resetPedroPosition() {
-        final Pose blueResetPose = new Pose(133.28, 10.75, Math.PI / 2);
-        final Pose redResetPose = new Pose(9.59, 9.67, Math.PI /2);
-        if (gamepad1.start && gamepad1.shareWasPressed()) {
-            if (robot.alliance == BLUE) {
-                teleFollower.setPose(blueResetPose);
-            }
-            if (robot.alliance == RED) {
-                teleFollower.setPose(redResetPose);
             }
         }
     }
@@ -348,8 +321,6 @@ public class TeleOP_RockCrawlers extends OpMode {
     }
 
 
-
-
     private void launcherStuff() {
         if (gamepad2.right_trigger > 0.05) {
             //turn on launcher with setVelocity
@@ -372,22 +343,5 @@ public class TeleOP_RockCrawlers extends OpMode {
         }
     }
 
-    private PathChain makeDynamicPath(Pose targetPose, double targetHeadingDegrees) {
-        return teleFollower.pathBuilder()
-                .addPath(new BezierLine(teleFollower.getPose(), targetPose))
-                .setLinearHeadingInterpolation(teleFollower.getHeading(), Math.toRadians(targetHeadingDegrees))
-                .build();
-        // Build the PathChain after adding all paths
-    }
-
-    private PathChain makeDynamicChain(Pose initalPose, Pose secondaryPose, double targetHeadingDegrees) {
-        return teleFollower.pathBuilder()
-                .addPath(new BezierLine(teleFollower.getPose(), initalPose))
-                .setLinearHeadingInterpolation(teleFollower.getHeading(), Math.toRadians(targetHeadingDegrees))
-                .addPath(new BezierLine(initalPose, secondaryPose))
-                .setLinearHeadingInterpolation(targetHeadingDegrees, targetHeadingDegrees)
-                .build(); // Build the PathChain after adding all paths
-    }
 }
-
 

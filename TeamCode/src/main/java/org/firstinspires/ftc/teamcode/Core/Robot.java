@@ -19,8 +19,6 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Vision.Limelight_Target_Scanner;
-import org.firstinspires.ftc.teamcode.Vision.Limelight_Randomization_Scanner;
 
 public class Robot {
 
@@ -54,10 +52,6 @@ public class Robot {
     public Pose robotPosition;
 
     public boolean callPartialPedro = true;
-
-    public Limelight_Randomization_Scanner randomizationScanner;
-    public Limelight_Target_Scanner targetScanner;
-
 
     public Panels panels;
 
@@ -100,10 +94,10 @@ public class Robot {
         );
 
         // This section sets the direction of all of the motors. Depending on the motor, this may change later in the program.
-        frontLeftDrive.setDirection(REVERSE);
-        frontRightDrive.setDirection(FORWARD);
-        backLeftDrive.setDirection(REVERSE);
-        backRightDrive.setDirection(FORWARD);
+        frontLeftDrive.setDirection(FORWARD);
+        frontRightDrive.setDirection(REVERSE);
+        backLeftDrive.setDirection(FORWARD);
+        backRightDrive.setDirection(REVERSE);
 
         // This tells the motors to chill when we're not powering them.
         frontRightDrive.setZeroPowerBehavior(BRAKE);
@@ -115,8 +109,6 @@ public class Robot {
         //This is new..
         telemetry.addData("Status", "Initialized");
 
-        targetScanner = new Limelight_Target_Scanner(this);
-        randomizationScanner = new Limelight_Randomization_Scanner(this);
 
         if (alliance == null) alliance = Alliance.BLUE;
     }

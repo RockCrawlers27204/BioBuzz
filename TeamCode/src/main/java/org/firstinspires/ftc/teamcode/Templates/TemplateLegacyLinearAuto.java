@@ -34,6 +34,7 @@ public class TemplateLegacyLinearAuto extends LinearOpMode {
         waitForStart();
 
         //The code to run once play has been pressed goes here.
+        
 
 
     }
