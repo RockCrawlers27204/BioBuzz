@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.Core;
 
+
+
+import static org.firstinspires.ftc.teamcode.Core.Robot.MoveDirection.*;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -30,8 +34,11 @@ public class RockCrawlerAuto extends LinearOpMode {
         waitForStart();
 
         //The code to run once play has been pressed goes here.
+        //Does not loop, runs top to bottom
 
-
+        auto.move(FORWARD, 100);
+        robot.runIntake(robot.intakeDefaultSpeed);
+        auto.move(LEFT, 25);
     }
 }
 

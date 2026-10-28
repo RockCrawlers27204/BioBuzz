@@ -52,7 +52,8 @@ public class AutonomousPLUS {
 
     /**
      * Starts strafing or turning the robot a number of ticks in a direction.
-     * @param direction The Robot.MoveDirection enum, for the direction
+     * @param direction The Robot.MoveDirection enum, for the direction:
+     * FORWARD, BACKWARD, LEFT, RIGHT, TURN_LEFT, TURN_RIGHT, DIAGONAL_LEFT, DIAGONAL_RIGHT
      * @param ticks The number of ticks to target moving
      */
     public void move(MoveDirection direction, int ticks) {

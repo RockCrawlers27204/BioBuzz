@@ -27,6 +27,9 @@ public class Robot {
     public DcMotorEx backLeftDrive;
     public DcMotorEx backRightDrive;
 
+    public DcMotorEx intakeMotorLeft;
+    public DcMotorEx intakeMotorRight;
+
     public VoltageSensor voltageSensor;
 
     public Telemetry telemetry;
@@ -82,6 +85,9 @@ public class Robot {
         frontLeftDrive = hardwareMap.get(DcMotorEx.class, "frontLeftDrive");
         backLeftDrive = hardwareMap.get(DcMotorEx.class, "backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotorEx.class, "backRightDrive");
+
+        intakeMotorLeft = hardwareMap.get(DcMotorEx.class, "intakeMotorLeft");
+        intakeMotorRight = hardwareMap.get(DcMotorEx.class, "intakeMotorRight");
 
 
         voltageSensor = hardwareMap.get(VoltageSensor.class, "Control Hub");
@@ -299,6 +305,17 @@ public class Robot {
     public void readyHardware() {
         // TODO Get your hardware ready here
     }
+
+    /**
+     * note: this is untested and may need to be reversed
+     * runs the intake for the robot
+     * @param intakeSpeed value between -1 and 1
+     */
+    public void runIntake(double intakeSpeed) {
+        intakeMotorLeft.setPower(-intakeSpeed);
+        intakeMotorRight.setPower(intakeSpeed);
+    }
+    public double intakeDefaultSpeed = 1;
 
     /**
      * Figures out if an integer is even.

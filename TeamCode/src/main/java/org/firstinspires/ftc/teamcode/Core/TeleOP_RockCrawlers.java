@@ -167,6 +167,27 @@ public class TeleOP_RockCrawlers extends OpMode {
         launcherStuff(); //TODO add input for speed (RPM) later
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if (robot.controlMode == STANDARD_ROBOT_CENTRIC) {
             singleJoystickDrive();
         } else if (robot.controlMode == PEDRO) {
