@@ -86,8 +86,9 @@ public class Robot {
         backLeftDrive = hardwareMap.get(DcMotorEx.class, "backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotorEx.class, "backRightDrive");
 
-        intakeMotorLeft = hardwareMap.get(DcMotorEx.class, "intakeMotorLeft");
-        intakeMotorRight = hardwareMap.get(DcMotorEx.class, "intakeMotorRight");
+        //TODO uncomment when motors are on
+        //intakeMotorLeft = hardwareMap.get(DcMotorEx.class, "intakeMotorLeft");
+        //intakeMotorRight = hardwareMap.get(DcMotorEx.class, "intakeMotorRight");
 
 
         voltageSensor = hardwareMap.get(VoltageSensor.class, "Control Hub");

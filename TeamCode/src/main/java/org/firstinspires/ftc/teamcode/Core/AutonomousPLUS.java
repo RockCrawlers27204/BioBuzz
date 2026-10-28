@@ -63,6 +63,19 @@ public class AutonomousPLUS {
     }
 
     /**
+     * Starts strafing or turning the robot a number of ticks in a direction.
+     * @param direction The Robot.MoveDirection enum, for the direction:
+     * FORWARD, BACKWARD, LEFT, RIGHT, TURN_LEFT, TURN_RIGHT, DIAGONAL_LEFT, DIAGONAL_RIGHT
+     * @param ticks The number of ticks to target moving
+     * @param customSpeedInput Set a custom speed different from the default variable
+     */
+    public void move(MoveDirection direction, int ticks, double customSpeedInput) {
+        robot.setTargets(direction, ticks, true);
+        robot.positionRunningMode();
+        robot.powerSet(customSpeedInput);
+    }
+
+    /**
      * Moves without changing the anchor point of the movements. It's like an "absolute mode" of
      * sorts.
      * @param direction The Robot.MoveDirection enum, for the direction
