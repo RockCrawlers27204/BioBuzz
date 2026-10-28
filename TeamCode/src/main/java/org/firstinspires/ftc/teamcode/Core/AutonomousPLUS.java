@@ -59,7 +59,7 @@ public class AutonomousPLUS {
     public void move(MoveDirection direction, int ticks) {
         robot.setTargets(direction, ticks, true);
         robot.positionRunningMode();
-        robot.powerSet(-speed);
+        robot.powerSet(speed);
     }
 
     /**
@@ -72,7 +72,7 @@ public class AutonomousPLUS {
     public void move(MoveDirection direction, int ticks, double customSpeedInput) {
         robot.setTargets(direction, ticks, true);
         robot.positionRunningMode();
-        robot.powerSet(-customSpeedInput);
+        robot.powerSet(customSpeedInput);
     }
 
     /**
@@ -84,7 +84,7 @@ public class AutonomousPLUS {
     public void tentativeMove(MoveDirection direction, int ticks) {
         robot.setTargets(direction, ticks, false);
         robot.positionRunningMode();
-        robot.powerSet(-speed);
+        robot.powerSet(speed);
     }
 
     /**
