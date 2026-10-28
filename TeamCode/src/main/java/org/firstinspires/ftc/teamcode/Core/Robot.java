@@ -180,46 +180,46 @@ public class Robot {
 
         switch (direction) {
             case RIGHT:
-                frontLeftDrive.setTargetPosition(-ticks + frontLeftPos);
-                frontRightDrive.setTargetPosition(ticks + frontRightPos);
-                backLeftDrive.setTargetPosition(ticks + backLeftPos);
-                backRightDrive.setTargetPosition(-ticks + backRightPos);
+                frontLeftDrive.setTargetPosition(ticks + frontLeftPos);
+                frontRightDrive.setTargetPosition(-ticks + frontRightPos);
+                backLeftDrive.setTargetPosition(-ticks + backLeftPos);
+                backRightDrive.setTargetPosition(ticks + backRightPos);
                 break;
             case LEFT:
-                frontLeftDrive.setTargetPosition(ticks + frontLeftPos);
-                frontRightDrive.setTargetPosition(-ticks + frontRightPos);
-                backLeftDrive.setTargetPosition(-ticks + backLeftPos);
-                backRightDrive.setTargetPosition(ticks + backRightPos);
+                frontLeftDrive.setTargetPosition(-ticks + frontLeftPos);
+                frontRightDrive.setTargetPosition(ticks + frontRightPos);
+                backLeftDrive.setTargetPosition(ticks + backLeftPos);
+                backRightDrive.setTargetPosition(-ticks + backRightPos);
                 break;
             case FORWARD:
-                frontLeftDrive.setTargetPosition(-ticks + frontLeftPos);
-                frontRightDrive.setTargetPosition(-ticks + frontRightPos);
-                backLeftDrive.setTargetPosition(-ticks + backLeftPos);
-                backRightDrive.setTargetPosition(-ticks + backRightPos);
+                frontLeftDrive.setTargetPosition(ticks + frontLeftPos);
+                frontRightDrive.setTargetPosition(ticks + frontRightPos);
+                backLeftDrive.setTargetPosition(ticks + backLeftPos);
+                backRightDrive.setTargetPosition(ticks + backRightPos);
                 break;
             case BACKWARD:
-                frontLeftDrive.setTargetPosition(ticks + frontLeftPos);
-                frontRightDrive.setTargetPosition(ticks + frontRightPos);
-                backLeftDrive.setTargetPosition(ticks + backLeftPos);
-                backRightDrive.setTargetPosition(ticks + backRightPos);
+                frontLeftDrive.setTargetPosition(-ticks + frontLeftPos);
+                frontRightDrive.setTargetPosition(-ticks + frontRightPos);
+                backLeftDrive.setTargetPosition(-ticks + backLeftPos);
+                backRightDrive.setTargetPosition(-ticks + backRightPos);
                 break;
             case TURN_RIGHT:
-                frontLeftDrive.setTargetPosition(-ticks + frontLeftPos);
-                frontRightDrive.setTargetPosition(ticks + frontRightPos);
-                backLeftDrive.setTargetPosition(-ticks + backLeftPos);
-                backRightDrive.setTargetPosition(ticks + backRightPos);
-                break;
-            case TURN_LEFT:
                 frontLeftDrive.setTargetPosition(ticks + frontLeftPos);
                 frontRightDrive.setTargetPosition(-ticks + frontRightPos);
                 backLeftDrive.setTargetPosition(ticks + backLeftPos);
                 backRightDrive.setTargetPosition(-ticks + backRightPos);
                 break;
-            case DIAGONAL_RIGHT:
+            case TURN_LEFT:
                 frontLeftDrive.setTargetPosition(-ticks + frontLeftPos);
+                frontRightDrive.setTargetPosition(ticks + frontRightPos);
+                backLeftDrive.setTargetPosition(-ticks + backLeftPos);
+                backRightDrive.setTargetPosition(ticks + backRightPos);
+                break;
+            case DIAGONAL_RIGHT:
+                frontLeftDrive.setTargetPosition(ticks + frontLeftPos);
                 frontRightDrive.setPower(frontRightPos);
                 backLeftDrive.setPower(backLeftPos);
-                backRightDrive.setTargetPosition(-ticks + backRightPos);
+                backRightDrive.setTargetPosition(ticks + backRightPos);
                 break;
             case DIAGONAL_LEFT:
                 frontLeftDrive.setPower(frontLeftPos);

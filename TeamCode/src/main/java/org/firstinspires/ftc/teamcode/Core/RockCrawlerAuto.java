@@ -35,12 +35,12 @@ public class RockCrawlerAuto extends LinearOpMode {
 
         //The code to run once play has been pressed goes here.
         //Does not loop, runs top to bottom
-        auto.speed = 0.5; //sets default speed for move funcs without speed input
+        auto.speed = 0.25; //sets default speed for the move funcs without speed input
 
         auto.moveAndStall(FORWARD, 900,0);
         sleep(0);
         //robot.runIntake(robot.intakeDefaultSpeed);
-        auto.moveAndStall(LEFT, 900,0);
+        //auto.moveAndStall(LEFT, 900,0);
 
         stop();
     }
