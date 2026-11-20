@@ -165,7 +165,7 @@ public class TeleOP_RockCrawlers extends OpMode {
         //note: dont use sleep here only in auto
         //TODO make teleop here
 
-        launcherStuff(0.08, 0.09);
+        launcherStuff(0.06, 0.07);
         //TODO ask Michael how to set launcher wheels to brake mode
 
 
@@ -362,16 +362,16 @@ public class TeleOP_RockCrawlers extends OpMode {
      * Turns on launcher wheels when R/L trigger is held down,
      * Shuts off launchers when not pressed,
      * Automatically moves balls to launcher when wheels are up to speed (TBD)
-     * @param speedRight speed when right trigger pressed
-     * @param speedLeft speed when left trigger pressed
+     * @param speedPollen speed for pollen when right trigger pressed
+     * @param speedNectar speed for nectar when left trigger pressed
      */
-    private void launcherStuff(double speedRight, double speedLeft) {
+    private void launcherStuff(double speedPollen, double speedNectar) {
         double deadzone = 0.05; //5% pressed or more
         int motorRPM = 6000;
         if (gamepad2.right_trigger > deadzone) {
-            robot.launcher.launchBall(speedRight, motorRPM); //TODO find out actual motor RPM
+            robot.launcher.launchBall(speedPollen, motorRPM); //TODO find out actual motor RPM
         } else if (gamepad2.left_trigger > deadzone){
-            robot.launcher.launchBall(speedLeft, motorRPM);
+            robot.launcher.launchBall(speedNectar, motorRPM);
         } else {
             robot.launcher.launchBall(0, motorRPM); //TODO find out actual motor RPM
         }
