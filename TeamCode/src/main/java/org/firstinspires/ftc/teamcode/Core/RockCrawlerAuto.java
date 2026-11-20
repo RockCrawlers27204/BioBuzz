@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class RockCrawlerAuto extends LinearOpMode {
     private Robot robot;
     private AutonomousPLUS auto;
+    public Launcher launcher;
 
     public static final String ALLIANCE_KEY = "Alliance";
     public static final String PATTERN_KEY = "Pattern";
@@ -20,6 +21,7 @@ public class RockCrawlerAuto extends LinearOpMode {
 
         robot = new Robot(hardwareMap, telemetry, this);
         auto = new AutonomousPLUS(robot);
+        //launcher = robot.launcher;
 
         while (opModeInInit()) {
             // This is the equivalent of init_loop(). It will repeat until the play button is
@@ -37,11 +39,11 @@ public class RockCrawlerAuto extends LinearOpMode {
         //Does not loop, runs top to bottom
         auto.speed = 0.25; //sets default speed for the move funcs without speed input
 
-        auto.moveAndStall(FORWARD, 900,0);
-        sleep(0);
+        auto.moveAndStall(FORWARD, 300, 0);
+        sleep(300);
         //robot.runIntake(robot.intakeDefaultSpeed);
-        //auto.moveAndStall(LEFT, 900,0);
-
+        auto.moveAndStall(RIGHT, 700, 0);
+//        auto.move
         stop();
     }
 }

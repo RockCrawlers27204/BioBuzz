@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.Core;
 
-import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODER;
-import static org.firstinspires.ftc.teamcode.Core.Robot.Alliance.BLUE;
-import static org.firstinspires.ftc.teamcode.Core.Robot.Alliance.RED;
-import static org.firstinspires.ftc.teamcode.Core.Robot.DriveMode.PEDRO;
-import static org.firstinspires.ftc.teamcode.Core.Robot.DriveMode.STANDARD_ROBOT_CENTRIC;
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.*;
+import static org.firstinspires.ftc.teamcode.Core.Robot.Alliance.*;
+import static org.firstinspires.ftc.teamcode.Core.Robot.DriveMode.*;
 
 import com.bylazar.panels.Panels;
 import com.pedropathing.follower.Follower;
@@ -59,6 +57,7 @@ public class TeleOP_RockCrawlers extends OpMode {
 
     public Robot robot = null;
     public IMU imu;
+    public Launcher launcher;
 
     private boolean blackboardPositioningSucessful = true;
 
@@ -160,11 +159,15 @@ public class TeleOP_RockCrawlers extends OpMode {
 
         robot.update();
 
-        //So Begins the input chain. At least try a bit to organize by driver
-        //TODO make teleop under here
-        //note: dont use sleep here only in auto
+        intakeBar();
 
-        launcherStuff(); //TODO add input for speed (RPM) later
+        //So Begins the input chain. At least try a bit to organize by driver
+        //note: dont use sleep here only in auto
+        //TODO make teleop here
+
+        launcherStuff(0.08, 0.09);
+        //TODO ask Michael how to set launcher wheels to brake mode
+
 
 
 
@@ -193,13 +196,13 @@ public class TeleOP_RockCrawlers extends OpMode {
         } else if (robot.controlMode == PEDRO) {
 
         }
-        runTrackpadFunctions();
+//        runTrackpadFunctions();
 
         if (gamepad2.right_stick_button) {
             doTelemetryStuff();
         }
 
-        switchAlliance();
+//        switchAlliance();
         controlMode();
 
 
@@ -285,7 +288,20 @@ public class TeleOP_RockCrawlers extends OpMode {
             imu.resetYaw();
         }
     }
-
+    private void intakeBar() {
+        double motorSpeed = 0;
+        if(gamepad2.right_bumper){ //Outtake
+            motorSpeed = 0.5;
+        }
+        if(gamepad2.left_bumper) { //Intake
+            motorSpeed = -1;
+        }
+        /* if (!robot.launcher.isFeeding) {
+            robot.intakeMotor.setPower(motorSpeed);
+        } */
+        robot.intakeMotor.setPower(motorSpeed);
+        telemetry.addData("launcher is feeding", robot.launcher.isFeeding);
+    }
     private void driveSpeed() {
         if (gamepad1.dpad_up || gamepad1.right_trigger >= 0.25) {
             speed = 1;
@@ -298,15 +314,15 @@ public class TeleOP_RockCrawlers extends OpMode {
         }
     }
 
-    private void switchAlliance() {
-        if (gamepad2.start && gamepad2.shareWasPressed()) {
-            if (robot.alliance == BLUE) {
-                robot.alliance = RED;
-            } else {
-                robot.alliance = BLUE;
-            }
-        }
-    }
+//    private void switchAlliance() {
+//        if (gamepad2.start && gamepad2.shareWasPressed()) {
+//            if (robot.alliance == BLUE) {
+//                robot.alliance = RED;
+//            } else {
+//                robot.alliance = BLUE;
+//            }
+//        }
+//    }
 
     private void doTelemetryStuff() {
         // This little section updates the driver hub on the runtime and the motor powers.
@@ -323,30 +339,41 @@ public class TeleOP_RockCrawlers extends OpMode {
         telemetry.update();
     }
 
-    void runTrackpadFunctions() {
-        if (gamepad1.touchpad_finger_1) {
-            trackpadCurrentX = gamepad1.touchpad_finger_1_x;
-            trackpadCurrentY = gamepad1.touchpad_finger_1_y; // Corrected for inversion
-            trackTarget = translateTrackpad(trackpadCurrentX, trackpadCurrentY, ""); // Sets tracktarget to coords
+//    void runTrackpadFunctions() {
+//        if (gamepad1.touchpad_finger_1) {
+//            trackpadCurrentX = gamepad1.touchpad_finger_1_x;
+//            trackpadCurrentY = gamepad1.touchpad_finger_1_y; // Corrected for inversion
+//            trackTarget = translateTrackpad(trackpadCurrentX, trackpadCurrentY, ""); // Sets tracktarget to coords
+//
+//            telemetry.addData("Finger 1 x detected val: ", gamepad1.touchpad_finger_1_x);
+//            telemetry.addData("Finger 1 y detected val: ", gamepad1.touchpad_finger_1_y);
+//
+//            telemetry.addData("Finger 1 x adjusted: ", trackpadCurrentX);
+//            telemetry.addData("Finger 1 y adjusted: ", trackpadCurrentY);
+//
+//            telemetry.addData("Pedro Target Position: ", trackTarget);
+//        } else if (trackTarget == null) {
+//            trackTarget = new Pose(72, 72, 0);
+//        }
+//    }
+//
 
-            telemetry.addData("Finger 1 x detected val: ", gamepad1.touchpad_finger_1_x);
-            telemetry.addData("Finger 1 y detected val: ", gamepad1.touchpad_finger_1_y);
-
-            telemetry.addData("Finger 1 x adjusted: ", trackpadCurrentX);
-            telemetry.addData("Finger 1 y adjusted: ", trackpadCurrentY);
-
-            telemetry.addData("Pedro Target Position: ", trackTarget);
-        } else if (trackTarget == null) {
-            trackTarget = new Pose(72, 72, 0);
-        }
-    }
-
-
-    private void launcherStuff() {
-        if (gamepad2.right_trigger > 0.05) {
-            //turn on launcher with setVelocity
+    /**
+     * Turns on launcher wheels when R/L trigger is held down,
+     * Shuts off launchers when not pressed,
+     * Automatically moves balls to launcher when wheels are up to speed (TBD)
+     * @param speedRight speed when right trigger pressed
+     * @param speedLeft speed when left trigger pressed
+     */
+    private void launcherStuff(double speedRight, double speedLeft) {
+        double deadzone = 0.05; //5% pressed or more
+        int motorRPM = 6000;
+        if (gamepad2.right_trigger > deadzone) {
+            robot.launcher.launchBall(speedRight, motorRPM); //TODO find out actual motor RPM
+        } else if (gamepad2.left_trigger > deadzone){
+            robot.launcher.launchBall(speedLeft, motorRPM);
         } else {
-            //turn off the launcher motor(s) with setVelocity(0)
+            robot.launcher.launchBall(0, motorRPM); //TODO find out actual motor RPM
         }
     }
 

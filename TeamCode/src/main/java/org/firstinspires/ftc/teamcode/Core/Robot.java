@@ -27,6 +27,10 @@ public class Robot {
     public DcMotorEx backLeftDrive;
     public DcMotorEx backRightDrive;
 
+    public DcMotorEx launchLeft;
+    public DcMotorEx launchRight;
+    public DcMotorEx intakeMotor;
+
     public DcMotorEx intakeMotorLeft;
     public DcMotorEx intakeMotorRight;
 
@@ -37,6 +41,7 @@ public class Robot {
     //init and declare war
     public OpMode opmode;
     public HardwareMap hardwareMap;
+    public Launcher launcher;
 
     public DriveMode controlMode;//STANDARD_ROBOT_CENTRIC;
     public IMU.Parameters imuParameters;
@@ -86,9 +91,10 @@ public class Robot {
         backLeftDrive = hardwareMap.get(DcMotorEx.class, "backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotorEx.class, "backRightDrive");
 
-        //TODO uncomment when motors are on
-        //intakeMotorLeft = hardwareMap.get(DcMotorEx.class, "intakeMotorLeft");
-        //intakeMotorRight = hardwareMap.get(DcMotorEx.class, "intakeMotorRight");
+        intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
+
+        launchLeft = hardwareMap.get(DcMotorEx.class, "launchLeft");
+        launchRight = hardwareMap.get(DcMotorEx.class, "launchRight");
 
 
         voltageSensor = hardwareMap.get(VoltageSensor.class, "Control Hub");
@@ -116,6 +122,7 @@ public class Robot {
         //This is new..
         telemetry.addData("Status", "Initialized");
 
+        launcher = new Launcher(this);
 
         if (alliance == null) alliance = Alliance.BLUE;
     }
@@ -312,10 +319,10 @@ public class Robot {
      * runs the intake for the robot
      * @param intakeSpeed value between -1 and 1
      */
-    public void runIntake(double intakeSpeed) {
-        intakeMotorLeft.setPower(-intakeSpeed);
-        intakeMotorRight.setPower(intakeSpeed);
-    }
+//    public void runIntake(double intakeSpeed) {
+//        intakeMotorLeft.setPower(-intakeSpeed);
+//        intakeMotorRight.setPower(intakeSpeed);
+//    }
     public double intakeDefaultSpeed = 1;
 
     /**
