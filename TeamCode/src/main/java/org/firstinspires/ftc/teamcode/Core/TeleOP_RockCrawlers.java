@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.*;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.Core.Robot.Alliance.*;
 import static org.firstinspires.ftc.teamcode.Core.Robot.DriveMode.*;
 
@@ -165,13 +166,19 @@ public class TeleOP_RockCrawlers extends OpMode {
         //note: dont use sleep here only in auto
         //TODO make teleop here
 
-        launcherStuff(0.06, 0.07);
+        launcherStuff(0.35, 0.5);
         //TODO ask Michael how to set launcher wheels to brake mode
 
 
 
 
 
+// add telemtry here
+        telemetry.addData("drive speed", speed);
+//        telemetry.addData("motorRPM", motorRPM);
+//        telemetry.addData("tolerance", tolerance);
+        telemetry.addData("left launcher power", robot.launchLeft.getPower());
+        telemetry.addData("right launcher power", robot.launchLeft.getPower());
 
 
 
@@ -368,12 +375,18 @@ public class TeleOP_RockCrawlers extends OpMode {
     private void launcherStuff(double speedPollen, double speedNectar) {
         double deadzone = 0.05; //5% pressed or more
         int motorRPM = 6000;
+
         if (gamepad2.right_trigger > deadzone) {
-            robot.launcher.launchBall(speedPollen, motorRPM); //TODO find out actual motor RPM
+            robot.launcher.launchBall(speedPollen); //TODO find out actual motor RPM
+            telemetry.addData("targetMotorRPM", speedPollen * motorRPM);
+
         } else if (gamepad2.left_trigger > deadzone){
-            robot.launcher.launchBall(speedNectar, motorRPM);
+            robot.launcher.launchBall(speedNectar);
+            telemetry.addData("targetMotorRPM", speedNectar * motorRPM);
+
         } else {
-            robot.launcher.launchBall(0, motorRPM); //TODO find out actual motor RPM
+            robot.launcher.launchBall(0); //TODO find out actual motor RPM
+            telemetry.addData("targetMotorRPM", 0);
         }
     }
 
