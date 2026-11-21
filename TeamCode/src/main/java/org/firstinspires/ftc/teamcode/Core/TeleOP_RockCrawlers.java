@@ -173,7 +173,7 @@ public class TeleOP_RockCrawlers extends OpMode {
 
 
 
-// add telemtry here
+// add telemetry here
         telemetry.addData("drive speed", speed);
 //        telemetry.addData("motorRPM", motorRPM);
 //        telemetry.addData("tolerance", tolerance);
