@@ -160,13 +160,15 @@ public class TeleOP_RockCrawlers extends OpMode {
 
         robot.update();
 
-        intakeBar();
 
         //So Begins the input chain. At least try a bit to organize by driver
         //note: dont use sleep here only in auto
         //TODO make teleop here
 
+        intakeBar();
         launcherStuff(0.35, 0.5);
+
+        //TODO add button in the intake function to reverse launcher wheels at very low speed (-0.05 ish)
         //TODO ask Michael how to set launcher wheels to brake mode
 
 
@@ -303,9 +305,6 @@ public class TeleOP_RockCrawlers extends OpMode {
         if(gamepad2.left_bumper) { //Intake
             motorSpeed = -1;
         }
-        /* if (!robot.launcher.isFeeding) {
-            robot.intakeMotor.setPower(motorSpeed);
-        } */
         robot.intakeMotor.setPower(motorSpeed);
         telemetry.addData("launcher is feeding", robot.launcher.isFeeding);
     }
